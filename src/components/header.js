@@ -24,8 +24,8 @@ const Header = ({title}) => {
           <p className="font-montserrat">{title}</p>
         </div>
         {isLoggedIn && (
-          <div className="flex">
-            <p onClick={handleLogout} className="mr-4 cursor-pointer">
+          <div className="flex cursor-pointer" onClick={handleLogout}>
+            <p className="mr-4">
               Logout
             </p>
             <LogoutIcon/>

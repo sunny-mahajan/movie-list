@@ -62,31 +62,41 @@ const Movies = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <MoviesGrid movies={moviesData} />
-          <div className="pagination flex gap-4 justify-center font-montserrat font-bold">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Prev
-            </button>
-            {[...Array(totalPages).keys()]
-              .slice(Math.max(0, currentPage - 2), currentPage + 1)
-              .map((page) => (
+        <div className="movies-container flex flex-col">
+          { moviesData.length > 0 ? <>
+            <MoviesGrid movies={moviesData} />
+              <div className="pagination flex gap-4 justify-center font-montserrat font-bold">
                 <button
-                  key={page + 1}
-                  onClick={() => handlePageChange(page + 1)}
-                  className={page + 1 === currentPage ? pageBtnCommonClasses + "bg-[#2BD17E]" : pageBtnCommonClasses + "bg-[#092C39]"}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
                 >
-                  {page + 1}
+                  Prev
                 </button>
-              ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
+                {[...Array(totalPages).keys()]
+                  .slice(Math.max(0, currentPage - 2), currentPage + 1)
+                  .map((page) => (
+                    <button
+                      key={page + 1}
+                      onClick={() => handlePageChange(page + 1)}
+                      className={page + 1 === currentPage ? pageBtnCommonClasses + "bg-[#2BD17E]" : pageBtnCommonClasses + "bg-[#092C39]"}
+                    >
+                      {page + 1}
+                    </button>
+                  ))}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+              </> : 
+              <div className="no-result-container flex flex-col justify-center items-center gap-16 h-full">
+                <span className="text-5xl">Your movie list is empty</span>
+                <a href="/add-movie" className="flex justify-center items-center h-14 w-52 bg-[#2BD17E] rounded-lg font-bold">Add a new movie</a>
+              </div>
+              
+          }
           </div>
         </>
       )}
