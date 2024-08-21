@@ -1,4 +1,4 @@
-import { updateMovie } from "../../../services/movieService";
+import { updateMovie, getMovieById } from "../../../services/movieService";
 
 export default async function handler(req, res) {
   if (req.method === "PUT") {
@@ -12,6 +12,8 @@ export default async function handler(req, res) {
     }
 
     try {
+      await getMovieById(id);
+
       const updatedMovie = await updateMovie(id, { title, publishingYear, poster });
       res.status(200).json(updatedMovie);
     } catch (error) {

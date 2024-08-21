@@ -84,4 +84,22 @@ const updateMovie = async (id, movieData) => {
   return { id: updatedDoc.id, ...updatedDoc.data() };
 };
 
-module.exports = { addMovie, getMovies, updateMovie };
+// Function to get a single movie by its ID
+const getMovieById = async (id) => {
+  try {
+    const movieDoc = doc(db, "movies", id);
+    const movieSnapshot = await getDoc(movieDoc);
+
+    if (!movieSnapshot.exists()) {
+      throw new Error("Movie not found");
+    }
+
+    return { id: movieSnapshot.id, ...movieSnapshot.data() };
+  } catch (error) {
+    console.error("Error fetching movie by ID: ", error);
+    throw error;
+  }
+};
+
+
+module.exports = { addMovie, getMovies, updateMovie, getMovieById };
