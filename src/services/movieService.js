@@ -4,7 +4,7 @@ const {
   getDocs,
   query,
   orderBy,
-  startAt,
+  startAfter,
   limit,
   doc,
   updateDoc,
@@ -15,8 +15,16 @@ const { db } = require("../../firebaseConfig.js");
 // Function to add a new movie
 const addMovie = async (movieData) => {
   try {
-    const docRef = await addDoc(collection(db, "movies"), movieData);
-    return { id: docRef.id, ...movieData };
+    const timestamp = new Date();
+    const movieDataWithTimestamp = {
+      ...movieData,
+      createdAt: timestamp,
+    };
+    const docRef = await addDoc(
+      collection(db, "movies"),
+      movieDataWithTimestamp
+    );
+    return { id: docRef.id, ...movieDataWithTimestamp };
   } catch (error) {
     console.error("Error adding document: ", error);
     throw error;
@@ -24,28 +32,54 @@ const addMovie = async (movieData) => {
 };
 
 // Function to get all movies
-const getMovies = async (page = 1, limitValue = 8) => {
+const getMovies = async (page = 1, limitValue = 8, cursorDoc = null) => {
   const moviesRef = collection(db, "movies");
-  const moviesQuery = query(
-    moviesRef,
-    orderBy("title"),
-    startAt((page - 1) * limitValue),
-    limit(limitValue)
-  );
+  let moviesQuery = query(moviesRef, orderBy("createdAt"), limit(limitValue));
+
+  if (cursorDoc) {
+    moviesQuery = query(
+      moviesRef,
+      orderBy("createdAt"),
+      startAfter(cursorDoc),
+      limit(limitValue)
+    );
+  }
 
   const querySnapshot = await getDocs(moviesQuery);
   const movies = [];
+  let lastDoc = null;
+  let firstDoc = null;
+
   querySnapshot.forEach((doc) => {
     movies.push({ id: doc.id, ...doc.data() });
+    lastDoc = doc;
+    if (!firstDoc) {
+      firstDoc = doc;
+    }
   });
 
-  return movies;
+  const totalMoviesSnapshot = await getDocs(collection(db, "movies"));
+  const totalMovies = totalMoviesSnapshot.size;
+
+  return {
+    movies,
+    totalMovies,
+    lastVisibleDoc: lastDoc,
+    firstVisibleDoc: firstDoc,
+  };
 };
 
 // Function to update a movie
 const updateMovie = async (id, movieData) => {
   const movieDoc = doc(db, "movies", id);
-  await updateDoc(movieDoc, movieData);
+
+  const timestamp = new Date();
+  const movieDataWithTimestamp = {
+    ...movieData,
+    updatedAt: timestamp,
+  };
+
+  await updateDoc(movieDoc, movieDataWithTimestamp);
   const updatedDoc = await getDoc(movieDoc);
   return { id: updatedDoc.id, ...updatedDoc.data() };
 };
