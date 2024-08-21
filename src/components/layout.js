@@ -13,7 +13,7 @@ const Layout = ({ title, children }) => {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
       <Header title={title} />
-      <main className="flex justify-center flex-grow container mx-auto p-4">
+      <main className="flex justify-center items-center flex-grow container mx-auto p-4">
         {children}
       </main>
       <Footer/>

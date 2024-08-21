@@ -72,6 +72,7 @@ const AddMovie = () => {
 
       if (response.ok) {
         toast.success('Movie added successfully!');
+        router.push('/movies'); // Navigate to the movies list or another page
       } else {
         toast.error('Failed to add movie.');
       }
