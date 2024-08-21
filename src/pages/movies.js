@@ -5,8 +5,11 @@ import Layout from "@/components/layout";
 import { getMovies } from "../services/movieService";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import MoviesGrid from "@/components/MoviesGrid";
+import { useRouter } from "next/router";
 
 const Movies = () => {
+  const router = useRouter();
+
   const [moviesData, setMoviesData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,6 +57,10 @@ const Movies = () => {
     }
   };
 
+  const handleAddMovieClick = () => {
+    router.push('/add-movie');
+  };
+
   const pageBtnCommonClasses = "w-7 h-7 rounded ";
 
   return (
@@ -93,7 +100,7 @@ const Movies = () => {
               </> : 
               <div className="no-result-container flex flex-col justify-center items-center gap-16 h-full">
                 <span className="text-5xl">Your movie list is empty</span>
-                <a href="/add-movie" className="flex justify-center items-center h-14 w-52 bg-[#2BD17E] rounded-lg font-bold">Add a new movie</a>
+                <button type="button" onClick={handleAddMovieClick} className="flex justify-center items-center h-14 w-52 bg-[#2BD17E] rounded-lg font-bold">Add a new movie</button>
               </div>
               
           }
