@@ -1,0 +1,20 @@
+import React from "react";
+import Head from "next/head";
+import Header from "./header";
+
+const Layout = ({ title, children }) => {
+  return (
+    <div className="bg-[#093545] min-h-screen flex flex-col">
+      <Head>
+        <title>Index Watch</title>
+        <meta name="description" content="Your app description" />
+        <link rel="icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </Head>
+      <Header title={title} />
+      <main className="flex-grow container mx-auto p-4">{children}</main>
+    </div>
+  );
+};
+
+export default Layout;
