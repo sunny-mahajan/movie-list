@@ -3,7 +3,6 @@ import { addMovie } from "../../services/movieService";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { title, publishingYear, poster } = req.body;
-
     if (!title || !publishingYear || !poster) {
       return res.status(400).json({
         message: "Missing required fields: title, publishingYear, and/or poster",

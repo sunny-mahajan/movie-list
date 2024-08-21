@@ -18,7 +18,7 @@ const Header = ({title}) => {
   }, []);
 
   return (
-    <header className="bg-[#093545] text-white py-6">
+    <header className="bg-[#093545] py-6">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-semibold">
           <p className="font-montserrat">{title}</p>

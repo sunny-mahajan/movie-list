@@ -63,7 +63,7 @@ const Movies = () => {
       ) : (
         <>
           <MoviesGrid movies={moviesData} />
-          <div className="pagination flex gap-4 justify-center text-white font-montserrat font-bold">
+          <div className="pagination flex gap-4 justify-center font-montserrat font-bold">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
