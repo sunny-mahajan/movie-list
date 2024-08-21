@@ -32,44 +32,32 @@ const Login = () => {
 	return (
 		<Layout>
 			<div className="max-w-md w-full mx-auto mt-10">
-				<div className="card">
-					<h2 className="text-2xl font-bold text-center mb-4">
-						Log in to your account
+				
+					<h2 className="text-6xl font-bold text-center mb-16">
+						Sign in
 					</h2>
-					<form className="space-y-6" onSubmit={handleLogin}>
+					<form className="space-y-6 flex flex-col justify-center items-center" onSubmit={handleLogin}>
 						<div>
-							<label
-								htmlFor="email-address"
-								className="block text-sm font-medium text-gray-700"
-							>
-								Email address
-							</label>
 							<input
 								id="email-address"
 								name="email"
 								type="email"
 								autoComplete="email"
 								required
-								className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+								className="placeholder-white font-normal rounded-lg w-80 h-11 p-4 bg-[#224957]"
 								placeholder="Email address"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
 						<div>
-							<label
-								htmlFor="password"
-								className="block text-sm font-medium text-gray-700"
-							>
-								Password
-							</label>
 							<input
 								id="password"
 								name="password"
 								type="password"
 								autoComplete="current-password"
 								required
-								className="txt-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+								className="placeholder-white font-normal rounded-lg w-80 h-11 p-4 bg-[#224957]"
 								placeholder="Password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
@@ -78,7 +66,7 @@ const Login = () => {
 						<div>
 							<button
 								type="submit"
-								className="btn-primary w-full"
+								className="rounded-lg w-36 font-bold h-14 bg-[#2BD17E] w-80 h-14"
 							>
 								Log in
 							</button>
@@ -89,17 +77,6 @@ const Login = () => {
 							{message}
 						</p>
 					)}
-
-					<p className="mt-4 text-center text-sm text-black-600">
-						{`Don't have an account?`}&nbsp;
-						<Link
-							href={`/register`}
-							className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-						>
-							Sign Up
-						</Link>
-					</p>
-				</div>
 			</div>
 		</Layout>
 	);
