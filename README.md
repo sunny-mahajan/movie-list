@@ -6,7 +6,6 @@ A web application that allows users to browse and manage their favorite movies. 
 
 - **Browse Movies**: Search and view details of movies.
 - **Manage List**: Add or remove movies from your personal list.
-- **Responsive Design**: Optimized for both desktop and mobile.
 
 ## Getting Started
 
@@ -31,9 +30,45 @@ A web application that allows users to browse and manage their favorite movies. 
    ```
    Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Configuration
+## Firebase Setup
 
-Update `firebaseConfig.js` with your Firebase project credentials to enable movie list management features.
+### 1. Create Firebase Project
+- Go to [Firebase Console](https://console.firebase.google.com/).
+- Click **Add Project** and follow the prompts.
+
+### 2. Set Up Firestore
+- Select **Firestore Database** from the sidebar.
+- Click **Create Database**, choose a mode (Production/Test), and set the location.
+
+### 3. Set Up Storage
+- Select **Storage** from the sidebar.
+- Click **Get Started**, choose a location for your storage bucket, and click **Done**.
+
+### 4. Get Firebase Config
+- Go to **Project settings** by clicking the gear icon in the Firebase Console.
+- Scroll to **Your apps**, select your app, and copy the Firebase config snippet.
+
+### 5. Add Config to Project
+- Update the Firebase config in `.env` project with the snippet from the Firebase Console to enable movie list management features.
+
+## CI/CD Pipeline
+
+Continuous Integration and Continuous Deployment (CI/CD) are set up for this project.
+
+- **Deployment Process**: Any changes pushed to the `main` branch are automatically deployed to AWS Amplify.
+- **Deployment Time**: Deployment typically completes within 4-5 minutes.
+
+### App Link
+
+You can access the deployed application here: [Movies List](https://main.dqrfcqn3holh8.amplifyapp.com/)
+
+### Login Credentials
+
+Use the following credentials to log in:
+- **Email**: `test1@email.com`
+- **Password**: `123456`
+
+
 
 ## Learn More
 
@@ -44,7 +79,3 @@ Update `firebaseConfig.js` with your Firebase project credentials to enable movi
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-This README provides an overview, setup instructions, and relevant resources for further learning.
