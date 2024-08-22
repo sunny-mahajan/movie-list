@@ -2,35 +2,50 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/components/layout";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Login = () => {
+	const [displayLoader, setDisplayLoader] = useState(false);
+
 	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [message, setMessage] = useState("");
 
 	const handleLogin = async (e) => {
+		setDisplayLoader(true);
+	
 		e.preventDefault();
 
-		const response = await fetch("/api/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		});
-
-		const data = await response.json();
-		if (data.user) {
-			localStorage.setItem("isLoggedIn", "true");
-			router.push("/movies");
-		} else {
-			setMessage(data.message);
+		try {
+			const response = await fetch("/api/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, password }),
+			});
+	
+			const data = await response.json();
+			if (data.user) {
+				localStorage.setItem("isLoggedIn", "true");
+				router.push("/movies");
+			} else {
+				setMessage(data.message);
+			}
+		} catch (error) {
+			toast.error('Failed to login.');
+			console.error("Error:", error);
+		} finally {
+			setDisplayLoader(false);
 		}
 	};
 
 	return (
 		<Layout>
+			{
+				displayLoader && <LoadingSpinner />
+			}
 			<div className="max-w-md w-full mx-auto mt-10">
 				
 					<h2 className="text-6xl font-bold text-center mb-16">
