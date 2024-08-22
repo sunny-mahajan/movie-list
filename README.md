@@ -75,7 +75,3 @@ Use the following credentials to log in:
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Firebase Documentation](https://firebase.google.com/docs)
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
