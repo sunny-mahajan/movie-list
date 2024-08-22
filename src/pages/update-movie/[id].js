@@ -16,11 +16,15 @@ const UpdateMovie = () => {
   const [uploading, setUploading] = useState(false);
   const [displayLoader, setDisplayLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [imageError, setImageError] = useState("");
 
   const validateForm = () => {
     const yearRegex = /^\d{4}$/;
     const titleRegex = /^[a-zA-Z0-9 ]+$/;
+
+    if (!imageURL) {
+      setErrorMessage("Image is required and must be one of the following types: jpg, png, gif, webp.");
+      return false;
+    }
 
     if (!title.match(titleRegex)) {
       setErrorMessage("Title can only be alphanumeric.");
@@ -31,13 +35,8 @@ const UpdateMovie = () => {
       setErrorMessage("Publishing year must be a 4-digit number.");
       return false;
     }
-
-    if (!imageURL) {
-      setImageError("Image is required and must be one of the following types: jpg, png, gif, webp.");
-      return false;
-    }
-
-    setImageError("");
+    
+    setErrorMessage("");
     return true;
   };
 
@@ -77,10 +76,11 @@ const UpdateMovie = () => {
 
   const uploadImage = async (file) => {
     if (!file) return;
+    setErrorMessage("");
 
     const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!validImageTypes.includes(file.type)) {
-      setImageError("Invalid image type. Please upload a jpg, png, gif, or webp file.");
+      setErrorMessage("Invalid image type. Please upload a jpg, png, gif, or webp file.");
       return;
     }
 
@@ -186,7 +186,6 @@ const UpdateMovie = () => {
             />
           </label>
         </div>
-        {imageError && <p className="text-red-500">{imageError}</p>}
         <div className="other-fields flex flex-col gap-12">
           <div className="user-inputs flex flex-col gap-4">
             <input

@@ -15,11 +15,15 @@ const AddMovie = () => {
   const [uploading, setUploading] = useState(false);
   const [displayLoader, setDisplayLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [imageError, setImageError] = useState("");
 
   const validateForm = () => {
     const yearRegex = /^\d{4}$/;
     const titleRegex = /^[a-zA-Z0-9 ]+$/;
+
+    if (!imageURL) {
+      setErrorMessage("Image is required and must be one of the following types: jpg, png, gif, webp.");
+      return false;
+    }
 
     if (!title.match(titleRegex)) {
       setErrorMessage("Title can only be alphanumeric.");
@@ -31,12 +35,7 @@ const AddMovie = () => {
       return false;
     }
 
-    if (!imageURL) {
-      setImageError("Image is required and must be one of the following types: jpg, png, gif, webp.");
-      return false;
-    }
-
-    setImageError("");
+    setErrorMessage("");
     return true;
   };
 
@@ -57,10 +56,11 @@ const AddMovie = () => {
 
   const uploadImage = async (file) => {
     if (!file) return;
+    setErrorMessage("");
 
     const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!validImageTypes.includes(file.type)) {
-      setImageError("Invalid image type. Please upload a jpg, png, gif, or webp file.");
+      setErrorMessage("Invalid image type. Please upload a jpg, png, gif, or webp file.");
       return;
     }
 
@@ -161,11 +161,9 @@ const AddMovie = () => {
               className="hidden"
               onChange={handleFileChange}
               accept="image/jpeg, image/png, image/gif, image/webp"
-              required
             />
           </label>
         </div>
-        {imageError && <p className="text-red-500">{imageError}</p>}
         <div className="other-fields flex flex-col gap-12">
           <div className="user-inputs flex flex-col gap-4">
             <input
@@ -195,7 +193,7 @@ const AddMovie = () => {
             <button type="button" onClick={handleCancel} className="border-2 rounded-lg w-36 font-bold h-14 border-white bg-[#093545]">
               Cancel
             </button>
-            <button type="submit" disabled={uploading || !imageURL || displayLoader} className="rounded-lg w-36 font-bold h-14 bg-[#2BD17E]">
+            <button type="submit" disabled={uploading || displayLoader} className="rounded-lg w-36 font-bold h-14 bg-[#2BD17E]">
               Submit
             </button>
           </div>
