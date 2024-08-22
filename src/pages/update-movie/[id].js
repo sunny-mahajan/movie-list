@@ -94,7 +94,7 @@ const UpdateMovie = () => {
 
       if (response.ok) {
         toast.success('Movie updated successfully!');
-        router.push('/movies'); // Navigate to the movies list or another page
+        router.push('/movies'); // Navigate to the movies list
       } else {
         toast.error('Failed to update movie.');
       }
@@ -106,7 +106,7 @@ const UpdateMovie = () => {
   };
 
   const handleCancel = () => {
-    router.push('/movies'); // Navigate to the movies list or another page
+    router.push('/movies'); // Navigate to the movies list
   };
 
   return (

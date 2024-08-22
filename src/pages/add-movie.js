@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 import Layout from "@/components/layout";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import DropImageIcon from "../components/DropImageIcon";
 const { storage, ref, uploadBytesResumable, getDownloadURL } = require("../../firebaseConfig.js");
 
 const AddMovie = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [publishingYear, setPublishingYear] = useState("");
   const [imageURL, setImageURL] = useState(null);
@@ -72,7 +74,7 @@ const AddMovie = () => {
 
       if (response.ok) {
         toast.success('Movie added successfully!');
-        router.push('/movies'); // Navigate to the movies list or another page
+        router.push('/movies'); // Navigate to the movies list
       } else {
         toast.error('Failed to add movie.');
       }
@@ -84,10 +86,7 @@ const AddMovie = () => {
   };
 
   const handleCancel = () => {
-    setTitle('');
-    setPublishingYear('');
-    setImageURL(null);
-    setUploading(false);
+    router.push('/movies'); // Navigate to the movies list
   };
 
   return (
